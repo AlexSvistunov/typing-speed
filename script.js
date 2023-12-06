@@ -1,75 +1,80 @@
 
 
-// Логика приложения: вводим данные, если буква правильная - она становится зеленой, если нет - красной
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 const input = document.querySelector('.input');
 const outDiv = document.querySelector('.out');
 const text = 'text I wanna be with you shit here we go again mouse speed test great amazing words monitor grass mic';
 const textArray = text.split(' ');
-console.log(textArray);
+
+
+const wordsObj = [];
+
+
+// console.log(wordsObj);
 
 function renderOutDiv() {
   for (let i = 0; i < textArray.length; i++) {
     const createSpan = document.createElement('span');
     createSpan.innerHTML = textArray[i] + " ";
-    // console.log(createSpan);
     outDiv.appendChild(createSpan);
   }
 
 }
 
-
-
 renderOutDiv();
 
+
+
 const arrayOfChildren = Array.from(outDiv.querySelectorAll('span'));
-console.log(arrayOfChildren);
+// console.log(arrayOfChildren);
+for (let i = 0; i < arrayOfChildren.length; i++) {
+  wordsObj[i] = {
+    number: i,
+    inner: arrayOfChildren[i],
+    innerHTML: arrayOfChildren[i].innerHTML,
+    done: false,
+  };
+}
+
+
+console.log(wordsObj);
+console.log(wordsObj[0]);
+
+
 let currentIndex = 0;
+let currentValue = '';
+
+let accumulatedValue = '';
+
+input.addEventListener('input', (e) => {
+  let currentValue = input.value;
+  accumulatedValue = currentValue.charAt(currentValue.length - 1);
+  for (let i = 0; i < wordsObj[currentIndex].innerHTML.length; i++) {
+    if(accumulatedValue === wordsObj[currentIndex].innerHTML[i]) {
+      console.log('Успех!!');
+    }
+  }
 
 
-input.addEventListener('input', () => {
-  let currentData = input.value;
-  console.log(currentData); //потому что value это не цифра, а полностью что человек ввел. либо попытаться отследить последнее, что он ввел, либо изменить немного логику
-  compare(currentData);
+  //может вообще сменить концепцию и проверять чтобы каждая буква сошлась(а каждая буква это accumaled)
 
- 
 
 });
 
 
 
+// input.addEventListener('input', (e) => {
+//   console.log(currentValue);
+// });
 
 
 
-function compare(symbol) {
+function compare(value) {
 
-  let currentSpan = arrayOfChildren[currentIndex];
-
-
-  if(symbol === currentSpan.innerHTML) {
-    currentSpan.style.backgroundColor = 'green';
-    currentIndex++;
-  }
-
-
-  
-
-
-  
- 
+  // logic at that moment: I have a value in the field and I compare it with what I have in the array of objects, If it equals to each other, I will mark the element of the array
+  // as 'done'
 
 }
+
 
 
 
