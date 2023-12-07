@@ -2,7 +2,7 @@
 
 const input = document.querySelector('.input');
 const outDiv = document.querySelector('.out');
-const text = 'text I wanna be with you shit here we go again mouse speed test great amazing words monitor grass mic';
+const text = 'text some shit no bro with you shit here we go again mouse speed test great amazing words monitor grass mic';
 const textArray = text.split(' ');
 
 
@@ -41,18 +41,49 @@ console.log(wordsObj[0]);
 
 
 let currentIndex = 0;
+let i = 0;
 let currentValue = '';
 
 let accumulatedValue = '';
 
 input.addEventListener('input', (e) => {
   let currentValue = input.value;
+  let span;
+  span = document.createElement('span');
   accumulatedValue = currentValue.charAt(currentValue.length - 1);
-  for (let i = 0; i < wordsObj[currentIndex].innerHTML.length; i++) {
+  while(i < wordsObj[currentIndex].innerHTML.length) {
     if(accumulatedValue === wordsObj[currentIndex].innerHTML[i]) {
-      console.log('Успех!!');
+      span.innerHTML = wordsObj[currentIndex].innerHTML[i];
+      i++;
+      span.style.backgroundColor = 'blue';
+      wordsObj[currentIndex].inner.style.backgroundColor = 'green'
+      console.log(span)
+    } else {
+      wordsObj[currentIndex].inner.style.backgroundColor = 'red'
+      break;
+      
     }
   }
+
+  currentIndex++;
+
+  console.log(accumulatedValue)
+
+
+  // console.log(wordsObj[currentIndex].innerHTML[0]);
+
+  // if(accumulatedValue === wordsObj[currentIndex].innerHTML)
+
+
+
+  // for (let i = 0; i < wordsObj[currentIndex].innerHTML.length; i++) {
+  //   span = document.createElement('span');
+  //   span.innerHTML = wordsObj[currentIndex].innerHTML;
+  //   console.log(span)
+  //   if(accumulatedValue === wordsObj[currentIndex].innerHTML[i]) {
+  //     console.log('Успех!!');
+  //   }
+  // }
 
 
   //может вообще сменить концепцию и проверять чтобы каждая буква сошлась(а каждая буква это accumaled)
