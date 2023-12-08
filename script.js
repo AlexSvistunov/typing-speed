@@ -9,7 +9,6 @@ const textArray = text.split(' ');
 const wordsObj = [];
 
 
-// console.log(wordsObj);
 
 function renderOutDiv() {
   for (let i = 0; i < textArray.length; i++) {
@@ -25,7 +24,6 @@ renderOutDiv();
 
 
 const arrayOfChildren = Array.from(outDiv.querySelectorAll('span'));
-// console.log(arrayOfChildren);
 for (let i = 0; i < arrayOfChildren.length; i++) {
   wordsObj[i] = {
     number: i,
@@ -36,74 +34,44 @@ for (let i = 0; i < arrayOfChildren.length; i++) {
 }
 
 
-console.log(wordsObj);
-console.log(wordsObj[0]);
-
-
 let currentIndex = 0;
 let i = 0;
 let currentValue = '';
 
+
 let accumulatedValue = '';
 
 input.addEventListener('input', (e) => {
-  let currentValue = input.value;
-  let span;
-  span = document.createElement('span');
-  accumulatedValue = currentValue.charAt(currentValue.length - 1);
-  while(i < wordsObj[currentIndex].innerHTML.length) {
-    if(accumulatedValue === wordsObj[currentIndex].innerHTML[i]) {
-      span.innerHTML = wordsObj[currentIndex].innerHTML[i];
-      i++;
-      span.style.backgroundColor = 'blue';
-      wordsObj[currentIndex].inner.style.backgroundColor = 'green'
-      console.log(span)
-    } else {
-      wordsObj[currentIndex].inner.style.backgroundColor = 'red'
-      break;
-      
-    }
+
+  const inputValue = input.value.trim();
+
+  const lastSpaceIndex = inputValue.lastIndexOf(' ');
+
+
+  const lastWord = lastSpaceIndex === -1 ? inputValue : inputValue.substring(lastSpaceIndex + 1);
+
+  if(lastWord.toLowerCase() === wordsObj[currentIndex].innerHTML.trim().toLowerCase()) {
+    wordsObj[currentIndex].done = true;
+    wordsObj[currentIndex].inner.style.backgroundColor = 'green';
+    currentIndex++;
+
+  } 
+
+  if(lastWord.length === wordsObj[currentIndex].innerHTML.length && lastWord.toLowerCase() !== wordsObj[currentIndex].innerHTML.trim().toLowerCase()) {
+    wordsObj[currentIndex].inner.style.backgroundColor = 'red';
   }
 
-  currentIndex++;
+  //чистить инпут как на референсе
 
-  console.log(accumulatedValue)
-
-
-  // console.log(wordsObj[currentIndex].innerHTML[0]);
-
-  // if(accumulatedValue === wordsObj[currentIndex].innerHTML)
-
-
-
-  // for (let i = 0; i < wordsObj[currentIndex].innerHTML.length; i++) {
-  //   span = document.createElement('span');
-  //   span.innerHTML = wordsObj[currentIndex].innerHTML;
-  //   console.log(span)
-  //   if(accumulatedValue === wordsObj[currentIndex].innerHTML[i]) {
-  //     console.log('Успех!!');
-  //   }
-  // }
-
-
-  //может вообще сменить концепцию и проверять чтобы каждая буква сошлась(а каждая буква это accumaled)
+  
 
 
 });
 
 
 
-// input.addEventListener('input', (e) => {
-//   console.log(currentValue);
-// });
-
-
-
 function compare(value) {
-
-  // logic at that moment: I have a value in the field and I compare it with what I have in the array of objects, If it equals to each other, I will mark the element of the array
-  // as 'done'
-
+  
 }
 
 
@@ -119,14 +87,3 @@ function compare(value) {
 
 
 
-// const array = document.querySelector('.text').innerHTML.split('').filter((el) => {
-//   if(el !== '' && el !== '\n') {
-//     return el;
-//   }
-// });
-// console.log(array);
-
-
-// input.addEventListener('input', () => {
-//   compare(input.value);
-// });
