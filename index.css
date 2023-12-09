@@ -1,0 +1,20 @@
+.words > span {
+  padding: 5px 2px;
+  margin: 0 2px;
+}
+
+.words > span.done {
+  background-color: green;
+}
+
+.words > span.wrong {
+  background-color: red;
+}
+
+.words > span.current {
+  background-color: grey;
+}
+
+.words {
+  margin-bottom: 50px;
+}
