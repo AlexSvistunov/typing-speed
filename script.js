@@ -33,7 +33,7 @@ input.addEventListener('keydown', (e) => {
 function logic() {
   if(input.value.trim() === words[currentIndex]) {
     arrayOfSpans[currentIndex].classList.remove('current')
-    arrayOfSpans[currentIndex].classList.add('done')
+    arrayOfSpans[currentIndex].classList.add('correct')
   } 
   
   if(input.value.trim() !== words[currentIndex]) {
@@ -48,7 +48,7 @@ function logic() {
 
 
   //попробовать сделать просто что-то на протяжении минуты, а уже потом тестировать такую логику на протяжении минуты(например, с модалкой, показывать ее после 20 сек пребывании на сайте, в течение 30 секунд и вырубать)
-
+  //переименовать переменные, методы
   //брать со своего сервера слова, либо с документа, либо с api
   //таймер
   //улучшение внешнего вида
