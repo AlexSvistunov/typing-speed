@@ -1,8 +1,9 @@
 const words = ['jump','yearn','zenith','apple','banana','cat','dog','elephant','flower','green','happy','ice-cream','kind','laugh','moon','nice','orange','play','quiet','red','smile','train','umbrella','violet','water','xylophone','yellow','zebra','ball','candy','dance','egg','fun','guitar','hat','island','jelly','kite','lemon','mouse','nap','ocean','penguin','quack','xenophobia','rainbow','sun','tree','up','violet','wiggle','x-ray','yawn'];
-const wordsOut = document.querySelector('.words');
-const input = document.querySelector('.input');
+const wordsOut = document.querySelector('.typing-test__words');
+const field = document.querySelector('.input');
+let currentIndex = 0;
 
-function renderText() {
+function renderWords() {
   for(let word of words) {
     const spanEl = document.createElement('span')
     spanEl.innerHTML = word;
@@ -10,43 +11,55 @@ function renderText() {
   }
 }
 
-renderText();
+renderWords();
 
 const arrayOfSpans = Array.from(wordsOut.childNodes);
 console.log(arrayOfSpans);
 
-input.addEventListener('input', () => {
+field.addEventListener('input', () => {
   arrayOfSpans[currentIndex].classList.add('current')
 });
 
-let currentIndex = 0;
-input.addEventListener('keydown', (e) => {
+field.addEventListener('keydown', (e) => {
   if(e.key === ' ') {
-    logic()
+    typingCheck(field)
     currentIndex++
-    input.value = ''
+    setTimeout(() => {
+      field.value = ''
+    }, 50)
   }
 
 
 });
 
-function logic() {
+function typingCheck(input) {
   if(input.value.trim() === words[currentIndex]) {
-    arrayOfSpans[currentIndex].classList.remove('current')
-    arrayOfSpans[currentIndex].classList.add('correct')
+   correctAnswer()
   } 
   
   if(input.value.trim() !== words[currentIndex]) {
-    arrayOfSpans[currentIndex].classList.remove('current')
-    arrayOfSpans[currentIndex].classList.add('wrong')
+    wrongAnswer()
   }
 
+}
+
+
+function correctAnswer() {
+  arrayOfSpans[currentIndex].classList.remove('current')
+  arrayOfSpans[currentIndex].classList.add('correct')
+}
+
+
+function wrongAnswer() {
+  arrayOfSpans[currentIndex].classList.remove('current')
+  arrayOfSpans[currentIndex].classList.add('wrong')
 }
 
 
 
 
 
+  //хотя бы перемешивать слова
   //попробовать сделать просто что-то на протяжении минуты, а уже потом тестировать такую логику на протяжении минуты(например, с модалкой, показывать ее после 20 сек пребывании на сайте, в течение 30 секунд и вырубать)
   //переименовать переменные, методы
   //брать со своего сервера слова, либо с документа, либо с api
