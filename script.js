@@ -1,7 +1,13 @@
 const words = ['jump','yearn','zenith','apple','banana','cat','dog','elephant','flower','green','happy','ice-cream','kind','laugh','moon','nice','orange','play','quiet','red','smile','train','umbrella','violet','water','xylophone','yellow','zebra','ball','candy','dance','egg','fun','guitar','hat','island','jelly','kite','lemon','mouse','nap','ocean','penguin','quack','xenophobia','rainbow','sun','tree','up','violet','wiggle','x-ray','yawn'];
 const wordsOut = document.querySelector('.typing-test__words');
 const field = document.querySelector('.input');
+const startTest = document.querySelector('.button-start');
+const timerMinutes = document.querySelector('.timer__minutes');
+const timerSeconds = document.querySelector('.timer__seconds');
 let currentIndex = 0;
+let functionTimerStarted;
+let functionTimerEnded;
+let amountOfCorrectWords = 0;
 
 function renderWords() {
   for(let word of words) {
@@ -14,7 +20,6 @@ function renderWords() {
 renderWords();
 
 const arrayOfSpans = Array.from(wordsOut.childNodes);
-console.log(arrayOfSpans);
 
 field.addEventListener('input', () => {
   arrayOfSpans[currentIndex].classList.add('current')
@@ -45,6 +50,7 @@ function typingCheck(input) {
 
 
 function correctAnswer() {
+  amountOfCorrectWords++;
   arrayOfSpans[currentIndex].classList.remove('current')
   arrayOfSpans[currentIndex].classList.add('correct')
 }
@@ -55,6 +61,39 @@ function wrongAnswer() {
   arrayOfSpans[currentIndex].classList.add('wrong')
 }
 
+
+function timer(seconds) {
+  functionTimerStarted = true;
+  const currentTimeMileSeconds = Date.now();
+  const endTime = currentTimeMileSeconds + seconds * 1000;
+  const idOfTimer = setInterval(() => {
+    const secondsLeft = Math.round((endTime - Date.now()) / 1000);
+    timerSeconds.textContent = secondsLeft;
+      
+    if(secondsLeft <= 0) {
+      clearInterval(idOfTimer);
+      field.disabled = true;
+      timerSeconds.textContent = 'Time is up';
+      startTest.textContent = 'Try again';
+      startTest.addEventListener('click', () => {
+        location.reload();
+      });
+      document.querySelector('.right-answers').style.display = 'block';
+      const initialText = document.querySelector('.right-answers').textContent;
+      document.querySelector('.right-answers').textContent = initialText + amountOfCorrectWords;
+      
+    }
+  }, 1000)
+
+  functionTimerEnded = true;
+
+
+}
+
+
+startTest.addEventListener('click', () => {
+  timer(5);
+});
 
 
 
@@ -69,5 +108,12 @@ function wrongAnswer() {
   //генерирование текста на разных языках -> функция смена языка
   //регистрация
   //хранение в бд рекордов
+
+  //are you ready??? 3 2 1(+ animation and then start)
+  //чето с кнопкой сделать start test когда время заканчивается
+  //возможно убрать блок по окончании таймера
+
+  //сделать Settings с настройками(выплывашку, модалку)
+
 
 
