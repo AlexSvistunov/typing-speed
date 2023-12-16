@@ -4,10 +4,12 @@ const field = document.querySelector('.input');
 const startTest = document.querySelector('.button-start');
 const timerMinutes = document.querySelector('.timer__minutes');
 const timerSeconds = document.querySelector('.timer__seconds');
+const modalResult = document.querySelector('.modal-result');
 let currentIndex = 0;
-let functionTimerStarted;
+let functionTimerStarted = false;
 let functionTimerEnded;
 let amountOfCorrectWords = 0;
+let amountOfWrongWords = 0;
 
 function renderWords() {
   for(let word of words) {
@@ -20,6 +22,16 @@ function renderWords() {
 renderWords();
 
 const arrayOfSpans = Array.from(wordsOut.childNodes);
+
+field.addEventListener('click', () => {
+  if(!functionTimerStarted) {
+    field.placeholder = 'Please start the test by clicking on the button'
+    field.disabled = true;
+  } 
+
+
+});
+
 
 field.addEventListener('input', () => {
   arrayOfSpans[currentIndex].classList.add('current')
@@ -57,12 +69,15 @@ function correctAnswer() {
 
 
 function wrongAnswer() {
+  amountOfWrongWords++;
   arrayOfSpans[currentIndex].classList.remove('current')
   arrayOfSpans[currentIndex].classList.add('wrong')
 }
 
 
 function timer(seconds) {
+  field.placeholder = '';
+  field.disabled = false;
   functionTimerStarted = true;
   const currentTimeMileSeconds = Date.now();
   const endTime = currentTimeMileSeconds + seconds * 1000;
@@ -78,9 +93,11 @@ function timer(seconds) {
       startTest.addEventListener('click', () => {
         location.reload();
       });
-      document.querySelector('.right-answers').style.display = 'block';
       const initialText = document.querySelector('.right-answers').textContent;
-      document.querySelector('.right-answers').textContent = initialText + amountOfCorrectWords;
+      document.querySelector('.right-answers').textContent = initialText + " : " + amountOfCorrectWords;
+      const initialText2 = document.querySelector('.wrong-answers').textContent;
+      document.querySelector('.wrong-answers').textContent = initialText2 + " : " + amountOfWrongWords;
+      modalResult.classList.add('modal-result--active');
       
     }
   }, 1000)
@@ -92,8 +109,11 @@ function timer(seconds) {
 
 
 startTest.addEventListener('click', () => {
-  timer(5);
+  timer(10);
 });
+
+
+
 
 
 
@@ -114,6 +134,10 @@ startTest.addEventListener('click', () => {
   //возможно убрать блок по окончании таймера
 
   //сделать Settings с настройками(выплывашку, модалку)
+
+
+  //когда правильный ответ с зеленым градиент рандомный, когда неправильный с красным градиент рандомный
+  //настройки такой sidebar выплывающий, можно выбрать слова посложнее, можно выбрать время, язык
 
 
 

@@ -34,6 +34,10 @@ body {
   height: 35px;
 }
 
+.input::placeholder {
+  font-size: 25px;
+}
+
 /* .input-wrapper {
   position: relative;
 }
@@ -89,13 +93,57 @@ body {
 }
 
 .right-answers {
-  display: none;
+  font-size: 40px;
+}
+
+.wrong-answers {
+  font-size: 40px;
 }
 
 
 .timer {
   text-align: center;
   margin-bottom: 15px;
+}
+
+.modal-result {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal-result.modal-result--active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
+}
+
+
+
+.modal-result__wrapper {
+  transform: translateY(-150%);
+  transition: transform 1s ease-in-out;
+  border-radius: 15px;
+  background-color: white;
+  padding: 50px;
+  max-width: 700px;
+  width: 100%;
+  min-height: 450px;
+  border: 3px solid grey;
+}
+
+.modal-result.modal-result--active  .modal-result__wrapper {
+  transform: translateY(0);
+  transition: transform 1s ease-in-out;
 }
 
 h1 {
