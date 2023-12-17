@@ -1,15 +1,39 @@
-const words = ['jump','yearn','zenith','apple','banana','cat','dog','elephant','flower','green','happy','ice-cream','kind','laugh','moon','nice','orange','play','quiet','red','smile','train','umbrella','violet','water','xylophone','yellow','zebra','ball','candy','dance','egg','fun','guitar','hat','island','jelly','kite','lemon','mouse','nap','ocean','penguin','quack','xenophobia','rainbow','sun','tree','up','violet','wiggle','x-ray','yawn'];
+const words = [
+  'jump', 'yearn', 'zenith', 'apple', 'banana', 'cat', 'dog', 'elephant', 'flower', 'green', 
+  'happy', 'ice-cream', 'kind', 'laugh', 'moon', 'nice', 'orange', 'play', 'quiet', 'red', 
+  'smile', 'train', 'umbrella', 'violet', 'water', 'xylophone', 'yellow', 'zebra', 'ball', 
+  'candy', 'dance', 'egg', 'fun', 'guitar', 'hat', 'island', 'jelly', 'kite', 'lemon', 
+  'mouse', 'nap', 'ocean', 'penguin', 'quack', 'xenophobia', 'rainbow', 'sun', 'tree', 
+  'up', 'violet', 'wiggle', 'x-ray', 'yawn', 'ape', 'box', 'cup', 'dawn', 'elf', 
+  'frog', 'gem', 'harp', 'ink', 'jazz', 'kiwi', 'lime', 'mint', 'nose', 'opal', 
+  'pink', 'quilt', 'ring', 'star', 'tide', 'urge', 'van', 'wave', 'xerox', 'yoga', 
+  'zip', 'axe', 'bark', 'clam', 'dock', 'elf', 'flip', 'grin', 'hop', 'inch', 
+  'jolt', 'keen', 'loop', 'mop', 'nun', 'opal', 'peck', 'quiz', 'ram', 'sip', 
+  'tap', 'urge', 'vow', 'whip', 'x-ray', 'yarn', 'zip', 'blink', 'clam', 'dart',
+  'bolt', 'curl', 'dust', 'fog', 'glow', 'hike', 'iron', 'jolt', 'knob', 'lamp', 
+  'mule', 'noble', 'opal', 'peak', 'quad', 'ramp', 'silk', 'tank', 'urge', 'vial', 
+  'whip', 'xerox', 'yarn', 'zero', 'blink', 'claw', 'dare', 'felt', 'grip', 'hive',
+  'jinx', 'kelp', 'luck', 'melt', 'nudge', 'opal', 'pluck', 'quest', 'riff', 'sink',
+  'tint', 'urge', 'veer', 'whiz', 'xerox', 'yield', 'zinc', 'blink', 'claw', 'dare', 'felt'
+];
+
+//как с кнопкой показать еще сделать. когда пользователь приближается уже, то добавлять слова с анимашкой
+
+
 const wordsOut = document.querySelector('.typing-test__words');
 const field = document.querySelector('.input');
 const startTest = document.querySelector('.button-start');
 const timerMinutes = document.querySelector('.timer__minutes');
 const timerSeconds = document.querySelector('.timer__seconds');
 const modalResult = document.querySelector('.modal-result');
+const wpmResult = document.querySelector('.wpm-result');
 let currentIndex = 0;
 let functionTimerStarted = false;
 let functionTimerEnded;
 let amountOfCorrectWords = 0;
 let amountOfWrongWords = 0;
+
+
 
 function renderWords() {
   for(let word of words) {
@@ -22,6 +46,7 @@ function renderWords() {
 renderWords();
 
 const arrayOfSpans = Array.from(wordsOut.childNodes);
+
 
 field.addEventListener('click', () => {
   if(!functionTimerStarted) {
@@ -38,7 +63,7 @@ field.addEventListener('input', () => {
 });
 
 field.addEventListener('keydown', (e) => {
-  if(e.key === ' ') {
+  if(field.value !== '' && e.key === ' ') {
     typingCheck(field)
     currentIndex++
     setTimeout(() => {
@@ -98,6 +123,8 @@ function timer(seconds) {
       const initialText2 = document.querySelector('.wrong-answers').textContent;
       document.querySelector('.wrong-answers').textContent = initialText2 + " : " + amountOfWrongWords;
       modalResult.classList.add('modal-result--active');
+      const wpm = (amountOfCorrectWords * seconds);
+      wpmResult.textContent = `WPM: ${wpm}`;
       
     }
   }, 1000)
