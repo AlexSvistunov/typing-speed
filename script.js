@@ -17,10 +17,25 @@ const words = [
   'tint', 'urge', 'veer', 'whiz', 'xerox', 'yield', 'zinc', 'blink', 'claw', 'dare', 'felt'
 ];
 
+
+// const words = [
+//   'jump', 'yearn', 'zenith', 'apple', 'banana', 'cat', 'dog', 'elephant', 'flower', 'green', 
+//   'happy', 'ice-cream', 'kind', 'laugh', 'moon', 'nice', 'orange', 'play', 'quiet', 'red', 
+//   'smile', 'train', 'umbrella', 'violet', 'water', 'xylophone', 'yellow', 'zebra', 'ball', 
+//   'candy', 'dance', 'egg', 'fun', 'guitar', 'hat', 'island', 'jelly', 'kite', 'lemon', 
+//   'mouse', 'nap', 'ocean', 'penguin', 'quack', 'xenophobia', 'rainbow', 'sun', 'tree', 
+//   'up', 'violet', 'wiggle', 'x-ray', 'yawn', 'ape', 'box', 'cup', 'dawn', 'elf', 
+//   'frog', 'gem', 'harp', 'ink', 'jazz', 'kiwi', 'lime', 'mint', 'nose', 'opal',
+// ];
+
+
+
+
 //как с кнопкой показать еще сделать. когда пользователь приближается уже, то добавлять слова с анимашкой
 
 
 const wordsOut = document.querySelector('.typing-test__words');
+const wordsInner = document.querySelector('.typing-test__words-wrapper');
 const field = document.querySelector('.input');
 const startTest = document.querySelector('.button-start');
 const timerMinutes = document.querySelector('.timer__minutes');
