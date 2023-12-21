@@ -35,6 +35,7 @@ const words = [
 
 
 const wordsOut = document.querySelector('.typing-test__words');
+const wordsRow = document.querySelector('.typing-test__word-row');
 const wordsInner = document.querySelector('.typing-test__words-wrapper');
 const field = document.querySelector('.input');
 const startTest = document.querySelector('.button-start');
@@ -50,6 +51,11 @@ let amountOfWrongWords = 0;
 
 
 
+
+
+renderWords();
+
+
 function renderWords() {
   for(let word of words) {
     const spanEl = document.createElement('span')
@@ -58,9 +64,11 @@ function renderWords() {
   }
 }
 
-renderWords();
-
 const arrayOfSpans = Array.from(wordsOut.childNodes);
+console.log(arrayOfSpans);
+
+
+
 
 
 field.addEventListener('click', () => {
@@ -75,6 +83,7 @@ field.addEventListener('click', () => {
 
 field.addEventListener('input', () => {
   arrayOfSpans[currentIndex].classList.add('current')
+  
 });
 
 field.addEventListener('keydown', (e) => {
@@ -90,6 +99,8 @@ field.addEventListener('keydown', (e) => {
 });
 
 function typingCheck(input) {
+
+  transitionToWords();
   if(input.value.trim() === words[currentIndex]) {
    correctAnswer()
   } 
@@ -150,14 +161,26 @@ function timer(seconds) {
 }
 
 
+function transitionToWords() {
+  let base;
+  if(currentIndex > 0 && currentIndex % 17 === 0) {
+    base = parseFloat(window.getComputedStyle(wordsOut).getPropertyValue('top'));
+    wordsOut.style.top = base + -60 + 'px';
+    
+  }
+}
+
+
+
+
 startTest.addEventListener('click', () => {
-  timer(10);
+  timer(60);
 });
 
 
 
 
-
+  //обрезать столько, на котором этот спан(вычислить через currentIndex через getPropertyValue top)
 
 
   //хотя бы перемешивать слова

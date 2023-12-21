@@ -56,8 +56,7 @@ body {
   animation: glower 27s linear infinite;
 } */
 
-.typing-rest__word-row{
-  
+.typing-test__word-row{
   max-height: 339px;
   overflow: hidden;
 }
