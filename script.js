@@ -1,37 +1,34 @@
-const words = [
-  'jump', 'yearn', 'zenith', 'apple', 'banana', 'cat', 'dog', 'elephant', 'flower', 'green', 
-  'happy', 'ice-cream', 'kind', 'laugh', 'moon', 'nice', 'orange', 'play', 'quiet', 'red', 
-  'smile', 'train', 'umbrella', 'violet', 'water', 'xylophone', 'yellow', 'zebra', 'ball', 
-  'candy', 'dance', 'egg', 'fun', 'guitar', 'hat', 'island', 'jelly', 'kite', 'lemon', 
-  'mouse', 'nap', 'ocean', 'penguin', 'quack', 'xenophobia', 'rainbow', 'sun', 'tree', 
-  'up', 'violet', 'wiggle', 'x-ray', 'yawn', 'ape', 'box', 'cup', 'dawn', 'elf', 
-  'frog', 'gem', 'harp', 'ink', 'jazz', 'kiwi', 'lime', 'mint', 'nose', 'opal', 
-  'pink', 'quilt', 'ring', 'star', 'tide', 'urge', 'van', 'wave', 'xerox', 'yoga', 
-  'zip', 'axe', 'bark', 'clam', 'dock', 'elf', 'flip', 'grin', 'hop', 'inch', 
-  'jolt', 'keen', 'loop', 'mop', 'nun', 'opal', 'peck', 'quiz', 'ram', 'sip', 
-  'tap', 'urge', 'vow', 'whip', 'x-ray', 'yarn', 'zip', 'blink', 'clam', 'dart',
-  'bolt', 'curl', 'dust', 'fog', 'glow', 'hike', 'iron', 'jolt', 'knob', 'lamp', 
-  'mule', 'noble', 'opal', 'peak', 'quad', 'ramp', 'silk', 'tank', 'urge', 'vial', 
-  'whip', 'xerox', 'yarn', 'zero', 'blink', 'claw', 'dare', 'felt', 'grip', 'hive',
-  'jinx', 'kelp', 'luck', 'melt', 'nudge', 'opal', 'pluck', 'quest', 'riff', 'sink',
-  'tint', 'urge', 'veer', 'whiz', 'xerox', 'yield', 'zinc', 'blink', 'claw', 'dare', 'felt'
-];
+
+let arrayOfSpans;
+let arrayOfWords;
 
 
-// const words = [
-//   'jump', 'yearn', 'zenith', 'apple', 'banana', 'cat', 'dog', 'elephant', 'flower', 'green', 
-//   'happy', 'ice-cream', 'kind', 'laugh', 'moon', 'nice', 'orange', 'play', 'quiet', 'red', 
-//   'smile', 'train', 'umbrella', 'violet', 'water', 'xylophone', 'yellow', 'zebra', 'ball', 
-//   'candy', 'dance', 'egg', 'fun', 'guitar', 'hat', 'island', 'jelly', 'kite', 'lemon', 
-//   'mouse', 'nap', 'ocean', 'penguin', 'quack', 'xenophobia', 'rainbow', 'sun', 'tree', 
-//   'up', 'violet', 'wiggle', 'x-ray', 'yawn', 'ape', 'box', 'cup', 'dawn', 'elf', 
-//   'frog', 'gem', 'harp', 'ink', 'jazz', 'kiwi', 'lime', 'mint', 'nose', 'opal',
-// ];
+async function requestForWords() {
+  arrayOfWords = [];
+  try {
+    // await new Promise(resolve => setTimeout(resolve, 2000));
+    const response = await fetch('words.json');
+    
+    if(!response.ok) {
+      throw new Error();
+    }
+
+    const array = await response.json();
+    for (let i = 0; i < array.length; i++) {
+      arrayOfWords.push(array[i]);
+    }
+
+    return arrayOfWords;
 
 
+  } catch(e) {
+    throw new Error();
 
+  }
 
-//как с кнопкой показать еще сделать. когда пользователь приближается уже, то добавлять слова с анимашкой
+}
+
+requestForWords();
 
 
 const wordsOut = document.querySelector('.typing-test__words');
@@ -43,6 +40,7 @@ const timerMinutes = document.querySelector('.timer__minutes');
 const timerSeconds = document.querySelector('.timer__seconds');
 const modalResult = document.querySelector('.modal-result');
 const wpmResult = document.querySelector('.wpm-result');
+const modalClose = document.querySelector('.modal-result__close');
 let currentIndex = 0;
 let functionTimerStarted = false;
 let functionTimerEnded;
@@ -50,25 +48,27 @@ let amountOfCorrectWords = 0;
 let amountOfWrongWords = 0;
 
 
+async function renderWords() {
+  const array = await requestForWords();
+  shuffleArray(array);
+  for (let i = 0; i < array.length; i++) {
+    const spanEl = document.createElement('span');
+    spanEl.innerHTML = array[i];
+    wordsOut.appendChild(spanEl);
+  }
 
+  arrayOfSpans = Array.from(wordsOut.childNodes);
 
+}
 
-renderWords();
-
-
-function renderWords() {
-  for(let word of words) {
-    const spanEl = document.createElement('span')
-    spanEl.innerHTML = word;
-    wordsOut.append(spanEl)
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
 }
 
-const arrayOfSpans = Array.from(wordsOut.childNodes);
-console.log(arrayOfSpans);
-
-
-
+renderWords();
 
 
 field.addEventListener('click', () => {
@@ -77,11 +77,10 @@ field.addEventListener('click', () => {
     field.disabled = true;
   } 
 
-
 });
 
 
-field.addEventListener('input', () => {
+field.addEventListener('input', (e) => {
   arrayOfSpans[currentIndex].classList.add('current')
   
 });
@@ -101,11 +100,11 @@ field.addEventListener('keydown', (e) => {
 function typingCheck(input) {
 
   transitionToWords();
-  if(input.value.trim() === words[currentIndex]) {
+  if(input.value.trim() === arrayOfWords[currentIndex]) {
    correctAnswer()
   } 
   
-  if(input.value.trim() !== words[currentIndex]) {
+  if(input.value.trim() !== arrayOfWords[currentIndex]) {
     wrongAnswer()
   }
 
@@ -157,7 +156,6 @@ function timer(seconds) {
 
   functionTimerEnded = true;
 
-
 }
 
 
@@ -171,23 +169,19 @@ function transitionToWords() {
 }
 
 
-
-
 startTest.addEventListener('click', () => {
-  timer(60);
+  timer(10);
+});
+
+modalClose.addEventListener('click', () => {
+  modalResult.classList.remove('modal-result--active');
 });
 
 
 
 
   //обрезать столько, на котором этот спан(вычислить через currentIndex через getPropertyValue top)
-
-
-  //хотя бы перемешивать слова
-  //попробовать сделать просто что-то на протяжении минуты, а уже потом тестировать такую логику на протяжении минуты(например, с модалкой, показывать ее после 20 сек пребывании на сайте, в течение 30 секунд и вырубать)
   //переименовать переменные, методы
-  //брать со своего сервера слова, либо с документа, либо с api
-  //таймер
   //улучшение внешнего вида
   //кнопка reset со спиннером
   //генерирование текста на разных языках -> функция смена языка
@@ -195,14 +189,13 @@ startTest.addEventListener('click', () => {
   //хранение в бд рекордов
 
   //are you ready??? 3 2 1(+ animation and then start)
-  //чето с кнопкой сделать start test когда время заканчивается
   //возможно убрать блок по окончании таймера
 
   //сделать Settings с настройками(выплывашку, модалку)
 
-
   //когда правильный ответ с зеленым градиент рандомный, когда неправильный с красным градиент рандомный
   //настройки такой sidebar выплывающий, можно выбрать слова посложнее, можно выбрать время, язык
+  //или вообще в бок листать слова
 
 
 
