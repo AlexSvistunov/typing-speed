@@ -178,6 +178,9 @@ function transitionToWords() {
 let sec = 60;
 startTest.addEventListener('click', () => {
   timer(sec);
+  if(settingsDropdown.classList.contains('dropdown--active')) {
+    settingsDropdown.classList.remove('dropdown--active');
+  }
 });
 
 modalClose.addEventListener('click', () => {
@@ -208,6 +211,7 @@ dropdownBtns.forEach(dropdownBtn => {
 
 
 
+
   //обрезать столько, на котором этот спан(вычислить через currentIndex через getPropertyValue top)
   //переименовать переменные, методы
   //улучшение внешнего вида
@@ -226,6 +230,8 @@ dropdownBtns.forEach(dropdownBtn => {
   //или вообще в бок листать слова
 
   //проверка чтобы не было много пробелов подряд, а то ломается приложение
+
+  //Добавить язык (сделать немного по тупому, но добавить язык, просто такой же создать Json, и взавизимости от нажатие кнопки json использовать такой-то...)
 
 
 
