@@ -173,7 +173,6 @@ body {
 }
 
 
-
 .modal-result__wrapper {
   position: relative;
   transform: translateY(-150%);
@@ -196,6 +195,27 @@ body {
   position: absolute;
   top: 15px;
   right: 15px;
+}
+
+.settings {
+  position: relative;
+}
+
+.settings__btn {
+  height: 100%;
+}
+
+.dropdown {
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
+}
+
+.dropdown.dropdown--active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease-in-out, visibility 0.35s ease-in-out;
 }
 
 h1 {

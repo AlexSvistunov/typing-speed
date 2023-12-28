@@ -97,6 +97,14 @@ field.addEventListener('keydown', (e) => {
 
 });
 
+field.addEventListener('keydown', (e) => {
+ if(e.key === " ") {
+  console.log(123);
+ }
+
+
+});
+
 function typingCheck(input) {
 
   transitionToWords();
@@ -167,14 +175,34 @@ function transitionToWords() {
     
   }
 }
-
-
+let sec = 60;
 startTest.addEventListener('click', () => {
-  timer(10);
+  timer(sec);
 });
 
 modalClose.addEventListener('click', () => {
   modalResult.classList.remove('modal-result--active');
+});
+
+const settingsBtn = document.querySelector('.settings__btn');
+const settingsDropdown = document.querySelector('.dropdown');
+const dropdownBtns = document.querySelectorAll('.dropdown__btn');
+
+settingsBtn.addEventListener('click', () => {
+  settingsDropdown.classList.toggle('dropdown--active');
+});
+
+function secondsTest(element) {
+  return element.dataset.time;
+}
+
+dropdownBtns.forEach(dropdownBtn => {
+  dropdownBtn.addEventListener('click', (e) => {
+    const currentBtn = e.currentTarget;
+    settingsDropdown.classList.remove('dropdown--active');
+    sec = currentBtn.dataset.time;
+    timerSeconds.textContent = sec;
+  });
 });
 
 
